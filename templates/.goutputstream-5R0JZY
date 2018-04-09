@@ -1,0 +1,95 @@
+<html>
+	<body>
+<head>{% load staticfiles %}
+<script type="text/javascript" src="{% static 'static_jquery/js/jquery.js' %}"></script> 
+<script src="{% static 'static_jquery/js/jquery.cookie.js' %}"></script>
+
+<style>
+input[type=text], select, textarea {
+	width: 100%;
+	padding: 12px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	margin-top: 6px;
+	margin-bottom: 16px;
+	resize: vertical;
+}
+
+input[type=submit] {
+	background-color: #4CAF50;
+	color: white;
+	padding: 12px 20px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+input[type=submit]:hover {
+	background-color: #45a049;
+}
+
+.container {
+	border-radius: 5px;
+	background-color: #f2f2f2;
+	padding: 20px;
+}
+</style>
+</head>
+
+produtos_detalhes
+<br>
+{% for x in produto %}
+<ul id = "lista_prod">
+<li>{{ x.name }}</li>
+<li>{{ x.sku }}</li>
+<li>{{ x.categoria }}</li>
+<li><img src="/media/{{ x.image }}"></li>
+<li>{{ x.description }}</li>
+{% for y in x.distribuidor.all %}
+<li id ="lista_prod_botao"> <button name = "dist_button" id ="dist_button" onclick="verDiv()" value="{{ y }}" type="button">{{ y }}</button> </li>
+{% endfor %}
+{% endfor %}
+</ul>
+
+<div id="info_distribuidor"  style="display:none;" > 
+	<form action="">
+		<label for="dname">Distribuidor</label>
+		<input type="text" id="dname" name="distribuidor" placeholder="distribuidor" readonly>
+		<label for="fname">First Name</label>
+		<input type="text" id="fname" name="firstname" placeholder="Your name..">
+		<label for="lname">Last Name</label>
+		<input type="text" id="lname" name="lastname" placeholder="Your last name..">
+		<label for="subject">Subject</label>
+		<textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
+		<input type="submit" value="Submit">
+	</form>
+</div>
+
+
+<script>
+	function verDiv() {
+		document.getElementById('info_distribuidor').style.display = "block";
+		//var value = $("#dist_button").text()
+		//console.log(value);
+		
+	}
+	function botoes(){
+		
+		
+		for (x = 0; x<10; x++)
+		{
+			var x ={{prod2|safe}};
+			console.log(x);
+			$('<button>').text("dadas").appendTo('#lista_prod');
+		}
+	}
+	
+
+
+window.onload = botoes;
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,207 @@
+{% load i18n %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+	
+
+<head>
+<title>Adicionar empreiteiro</title>
+<!-- for-mobile-apps -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<!-- //for-mobile-apps -->
+<link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" media="all" />
+<link rel="stylesheet" href="{% static 'css/jquery-ui.css'  %}" />
+
+<style>
+
+#submit_form{
+	outline: none;
+    padding: 12px 0;
+    font-size: 1em;
+    font-weight: 600;
+    color: #fff;
+    border: none;
+    width: 20%;
+    background: black;
+    cursor: pointer;
+    text-transform: uppercase;
+	text-decoration:underline;
+}
+
+strong, b {
+    font-weight: bold;
+}
+</style>
+
+<script src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+<link href="//fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese" rel="stylesheet">
+</head>
+<title>Auditorias P3</title>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<body>
+
+<div class="w3-top">
+  <div class="w3-bar w3-white w3-wide w3-padding w3-card">
+    <a href="/" class="w3-bar-item w3-button" style="width: 120px !important;"><b>P3</b> Auditorias</a>
+    <div class="w3-right ">
+		{% if not user.is_authenticated %}
+			<a href="/login/" class="w3-bar-item w3-button">Login</a>
+		{% endif %}  
+      <a href="/logout/" class="w3-bar-item w3-button">Logout</a>
+    </div>
+  </div>
+</div>
+
+
+<header class="w3-display-container w3-content w3-wide" style="max-width:1500px;" id="home">
+  <div class="w3-display-middle w3-margin-top w3-center">
+    <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>P3</b></span> <span class="w3-hide-small w3-text-light-grey">Auditorias</span></h1>
+  </div>
+</header>
+<div class="w3-content w3-padding" style="max-width:1564px">
+<br>
+<div class="w3-container w3-padding-32" id="projects">
+    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Empreiteiros</h3>
+  </div>
+
+<div class="main">
+		<div class="w3_agile_main_grids">
+			<div class="agileits_w3layouts_main_grid">
+				<form id="forma1" action="." method="post" enctype="multipart/form-data"
+					{% csrf_token %}
+
+
+					<div class="agile_main_grid_left">
+						<div class="w3_agileits_main_grid_left_grid">
+
+							<h3></h3>
+                            <div style="display:block;outline-width: 3px;order-top: 3px dotted #e5e5e5;
+	border: 3px dotted #e5e5e5;
+	box-shadow: inset 0 -1px 0 0 #e5e5e5, inset 0 1px 0 0 #e5e5e5, 0 1px 0 0 #e5e5e5, 0 -1px 0 0 #e5e5e5;
+	margin-bottom: 1px;"id="div_geral" > <p><b><h3>Geral</h3></b> </p>
+
+                            {{ form.subempreiteiro.label}}{{ form.subempreiteiro }}<br>
+                            <a href="#" onclick="clearSelected();">Limpar seleção</a><br>
+                            {{ form.obra.label}}<br>{{ form.obra }}<br>
+                            {{ form.nome_empresa.label}}<br>{{ form.nome_empresa }}<br>
+                            {{ form.morada.label}}<br>{{ form.morada }}<br>
+                            {{ form.cp.label}}<br>{{ form.cp }}<br>
+                            {{ form.localidade.label}}{{ form.localidade }}<br>
+                            {{ form.atividade.label}}{{ form.atividade }}<br>
+                            {{ form.alvara.label}}{{ form.alvara }}<br>
+                            {{ form.nif.label}}<br>{{ form.nif }}<br>
+                            {{ form.nome_representante.label}}{{ form.nome_representante }}<br>
+                            {{ form.contacto_representante.label}}{{ form.contacto_representante }}<br>
+                            </div><button type=button onclick="toggle_visibility('div_geral');">Ver/esconder (geral)</button>
+                            <div style="display:block;outline-width: 3px;order-top: 3px dotted #e5e5e5;
+	border: 3px dotted #e5e5e5;
+	box-shadow: inset 0 -1px 0 0 #e5e5e5, inset 0 1px 0 0 #e5e5e5, 0 1px 0 0 #e5e5e5, 0 -1px 0 0 #e5e5e5;
+	margin-bottom: 1px;"id="div_cenas" > <p><b><h3>Seguros</h3></b> </p>
+                            {{ form.num_ap_seguro_resp_civil.label}}{{ form.num_ap_seguro_resp_civil }}<br>
+                            {{ form.data_seguro_resp_civil.label}}{{ form.data_seguro_resp_civil }}<br>
+                            {{ form.validade_seguro_resp_civil.label}}{{ form.validade_seguro_resp_civil }}<br>
+                            {{ form.data_decl_ss.label}}{{ form.data_decl_ss }}<br>
+                            {{ form.validade_decl_ss.label}}{{ form.validade_decl_ss }}<br>
+                            {{ form.data_cert_financas.label}}{{ form.data_cert_financas }}<br>
+                            {{ form.validade_cert_financas.label}}{{ form.validade_cert_financas }}<br>
+                            </div><button type=button onclick="toggle_visibility('div_cenas');">Ver/esconder (geral)</button>
+                            <div style="display:block;outline-width: 3px;order-top: 3px dotted #e5e5e5;
+	border: 3px dotted #e5e5e5;
+	box-shadow: inset 0 -1px 0 0 #e5e5e5, inset 0 1px 0 0 #e5e5e5, 0 1px 0 0 #e5e5e5, 0 -1px 0 0 #e5e5e5;
+	margin-bottom: 1px;"id="div_cenas2" ><p><b><h3>Mapa de remunerações</h3></b> </p>
+                            {{ form.mes_folha_ferias.label}}{{ form.mes_folha_ferias }}<br>
+                            {{ form.recibo_folha_ferias.label}}{{ form.recibo_folha_ferias }}<br>
+                            {{ form.horario_trabalho.label}}{{ form.horario_trabalho }}<br>
+                            {{ form.declaracao_pss.label}}{{ form.declaracao_pss }}<br>
+                            {{ form.declaracao_imigrantes.label}}{{ form.declaracao_imigrantes }}<br>
+                            {{ form.contrato_subempreitada.label}}{{ form.contrato_subempreitada }}<br>
+                            {{ form.companhia_seguro_trabalho.label}}{{ form.companhia_seguro_trabalho }}<br>
+                            {{ form.apolice_seguro_trabalho.label}}{{ form.apolice_seguro_trabalho }}<br>
+                            {{ form.modalidade_seguro_trabalho.label}}{{ form.modalidade_seguro_trabalho }}<br>
+                            {{ form.valdade_seguro_trabalho.label}}:{{ form.valdade_seguro_trabalho }}<br>
+                            </div><button type=button onclick="toggle_visibility('div_cenas2');">Ver/esconder (Mapa de remunerações)</button>
+						</div>
+						
+					</div>
+					
+					<div class="clear"> </div>
+					<label><span></span><input id = "submit_form" type="submit" value="Guardar" /></label>
+				</form>
+    
+  
+</div>
+
+<div 	class="w3-grayscale" style="width:100%;height:450px;"></div>
+
+<footer class="w3-center w3-black w3-padding-16">
+  <p>Powered by <a href="/"  target="_blank" class="w3-hover-text-green">Patrick</a></p>
+</footer>
+
+
+
+</body>
+</html>
+<script src="{% static 'js/jquery.mask.js' %}"></script>
+<script>
+$(document).ready(function(){
+  $('.matricula').mask('AA-AA-AA');
+  })
+
+
+$('#id_data_seguro_resp_civil').change(function() {
+    var date =  new Date($("#id_data_seguro_resp_civil").val());
+    var validade = new Date(date.setMonth(date.getMonth()+3)).toLocaleDateString('en-GB', {
+        day : 'numeric',
+        month : 'numeric',
+        year : 'numeric'
+        }).split(' ').join('-');
+
+        document.getElementById("id_validade_seguro_resp_civil").value = validade;
+
+});
+
+$('#id_data_decl_ss').change(function() {
+    var date =  new Date($("#id_data_decl_ss").val());
+    var validade = new Date(date.setMonth(date.getMonth()+3)).toLocaleDateString('en-GB', {
+        day : 'numeric',
+        month : 'numeric',
+        year : 'numeric'
+        }).split(' ').join('-');
+
+        document.getElementById("id_validade_decl_ss").value = validade;
+
+});
+
+$('#id_data_cert_financas').change(function() {
+    var date =  new Date($("#id_data_cert_financas").val());
+    var validade = new Date(date.setMonth(date.getMonth()+4)).toLocaleDateString('en-GB', {
+        day : 'numeric',
+        month : 'numeric',
+        year : 'numeric'
+        }).split(' ').join('-');
+
+        document.getElementById("id_validade_cert_financas").value = validade;
+
+});
+
+function clearSelected(){
+    var elements = document.getElementById("id_subempreiteiro").options;
+
+    for(var i = 0; i < elements.length; i++){
+      elements[i].selected = false;
+    }
+  }
+
+function toggle_visibility(id) {
+    var e = document.getElementById(id);
+    if(e.style.display == 'block')
+      e.style.display = 'none';
+    else
+      e.style.display = 'block';
+}
+</script>

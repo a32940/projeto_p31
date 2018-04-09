@@ -1,0 +1,104 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+{% load staticfiles %}
+{% load postman_tags %}
+{% load hijack_tags %}
+
+
+{% block extrastyle %}{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}" />
+<script type="text/javascript" src="{% static 'jquery-3.2.1.min.js' %}"></script> 
+<script type="text/javascript" src="{% static 'jquery.cookie.js' %}"></script> 
+<link rel="stylesheet" type="text/css" href="{% static 'hijack/hijack-styles.css' %}" />
+
+{% endblock %}
+{% block coltype %}colMS{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+<body>
+
+<div style="padding: 10px;">
+{% postman_unread as unread_count %}
+	{% if unread_count %} 
+		<table>
+			<tr>
+				<th scope="row">{% trans "Tem" %} <strong>{{ unread_count }}</strong> 
+					{% endif %}
+					<a href="/messages/"><strong>{% trans "Mensagens" %}</strong></a>{% if unread_count %} 
+					{% trans "por ler" %}
+				</th>
+			</tr>
+		{% endif %}
+	{% if user.groups.all.0.name == "distribuidores" %}
+	{% if pedidosquery2|length == 0 %}
+	
+	{% else %}
+		<table>
+			<tr>
+				<th scope="row"><a href="/admin/pedidos/">{% trans "Tem" %} <strong> {{ pedidosquery2|length }} </strong>{% trans "pedido(s) de distribuição á espera de aprovação" %}</a></th>
+			</tr>
+			{% endif %}
+			<table>
+			<tr>
+				<th scope="row"><a href="/admin/distribuidores/">{% trans "Gestão" %}</a></th>
+			</tr>
+			<tr>
+				<th scope="row"><a href="/admin/distribuidor/">{% trans "Meus produtos" %}</a></th>
+			</tr>
+		</table>
+	{% elif "admin" in user.groups.all.0.name  %}
+		<table>
+			<tr>
+				<th scope="row"><a href="/admin/itelmatis/">{% trans "Loja" %}</a></th>
+			</tr>
+			{% if perms.itelmatis.change_produtos_permissoes %}  <!-- apenas utilizadores com esta permissao irao ver os pedidos de distribuicao-->
+				{% if pedidosquery|length == 0 %}
+				<tr>
+				<th scope="row"><a href="/admin/pedidos/">{% trans "Nao tem pedidos de distribuição pendentes" %}</a></th>
+				</tr>
+				{% else %}
+			<tr>
+				<th scope="row"><a href="/admin/pedidos/">{% trans "Tem" %} <strong> {{ pedidosquery.count }} </strong>{% trans "pedidos de distribuição" %}</a></th>
+			</tr>
+			{% endif %}
+			<tr>
+				<th scope="row"><a href="/admin/editar_site/">{% trans "Editar site" %}</a></th>
+			</tr>
+			<tr>
+				<th scope="row"><a href="/admin/auth/group/">{% trans "Grupos" %}</a></th>
+			</tr>
+			<tr>
+				<th scope="row"><a href="/admin/add_dist_loja/">{% trans "Adicionar distribuidor á loja" %}</a></th>
+			</tr>
+		</table>{% endif %}
+	{% elif user.is_superuser %}
+		<table style="width:100%">
+			<tr>
+				 <th scope="row"><a href="/admin/control/">{% trans "Controlar utilizador" %}</a></th>
+			</tr>
+			<tr>
+				 <th scope="row"><a href="/admin/itelmatis/">{% trans "Loja" %}</a></th>
+			</tr>
+			<tr>
+				<th scope="row"><a href="/admin/auth/group/">{% trans "Grupos" %}</a></th>
+			</tr>
+			<tr>
+				<th scope="row"><a href="/admin/logs/">Logs</a></th>
+			</tr>
+		</table>
+	{% endif %}
+</div>
+</body>
+{% hijack_notification %}
+<script type="text/javascript">
+
+</script>
+
+{% endblock %}
+
+
+

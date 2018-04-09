@@ -1,0 +1,130 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+<link rel="stylesheet" type="text/css" href="{% static 'pick-a-color-1.2.3.min.css' %}" />
+<title>Adicionar obra</title>
+<!-- for-mobile-apps -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<!-- //for-mobile-apps -->
+<link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" media="all" />
+<link rel="stylesheet" href="{% static 'css/jquery-ui.css'  %}" />
+
+
+<script src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+<link href="//fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese" rel="stylesheet">
+</head>
+<body>
+	<div class="main">
+		<h1>Criar nova auditoria</h1>
+		<div class="w3_agile_main_grids">
+			<div class="agileits_w3layouts_main_grid">
+				<form id="forma1" action="." method="post" enctype="multipart/form-data">
+					{% csrf_token %}
+					
+					{% for a in obras %}
+	<input type="hidden"name='empresa' value={{a.empresa}}>
+{% endfor %}
+
+
+					<div class="agile_main_grid_left">
+						<div class="w3_agileits_main_grid_left_grid">
+							<h3></h3>
+							
+							
+							{{ form.tecnico.label_tag }}{{ form.tecnico }}	
+							{{ form.auditor.label_tag }}{{ form.auditor }}
+							{{ form.data.label_tag }}{{ form.data }}
+							
+							{{ form.obra.label_tag }}{{ form.obra }}
+				<label id ="cenas">
+							{% for form in inlines %}
+								</label>
+								{{form.as_p}}
+							{% endfor %}
+						
+<label id = "adicionar_mais" for="field6"><span><a href="#">Adicionar outra imagem</a></span> <br><br></label>
+
+{{ form.recomendacoes.label_tag }}{{ form.recomendacoes }}
+{{ form.trabalhos.label_tag }}{{ form.trabalhos }}
+
+
+
+							
+						</div>
+						
+					</div>
+					
+					<div class="clear"> </div>
+					<label><span></span><input type="submit" value="Guardar" /></label>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+		
+	
+<script>
+var myDiv = document.getElementById("cenas");
+	
+var selectList = document.createElement("select");
+var selectList2 = document.createElement("select");
+
+var x = document.createElement("LABEL");
+var t = document.createTextNode("Conformidade:");
+x.appendChild(t);
+
+var x1 = document.createElement("LABEL");
+var t1 = document.createTextNode("Conformidade texto:");
+x1.appendChild(t1);
+
+
+var array = ["escadas mal","tudo mal"];
+var conformes = ["Conforme","Não conforme"," "];
+
+ var form_num = 1;
+ $(document).ready(function() {
+   $("#adicionar_mais").click(function() {
+   form_num ++;
+   $("input[name='fotos_set-TOTAL_FORMS']").attr('value', form_num + 1);
+	  $("#cenas").append("<br/><label for='id_form-" + form_num + "-key'></label> <label for='id_form-" + form_num + "-key'>Imagem:</label> <input id='id_fotos_set-" + form_num +
+	    "-imagem' type='file' ' name='fotos_set-" + form_num + "-imagem'/><br><label for='id_form-" + form_num + "-value'>Descricao:</label> <input  id='id_fotos_set-" + form_num + "-descricao' type='text'  name='fotos_set-" + form_num +
+	   "-descricao'/> <input id='id_fotos_set-" + form_num + "-auditoria' type='hidden' ' name='fotos_set-" + form_num + 
+	    "-auditoria'/>   <br/><label for='id_form-" + form_num + "-key'></label> <input id='id_fotos_set-" + form_num + "-id' type='hidden' ' name='fotos_set-" + form_num + "-id'/>");
+	    
+	    myDiv.appendChild(x);
+	    selectList2.name = "name='fotos_set-" + form_num +"-conformidade'";
+		selectList2.setAttribute("class", "w3layouts_select");
+	    myDiv.appendChild(selectList2);
+	    
+	    myDiv.appendChild(x1);
+	    selectList.name = "name='fotos_set-" + form_num +"-conformidade_texto'";
+	    selectList.setAttribute("class", "w3layouts_select");
+	    myDiv.appendChild(selectList);
+	    
+
+   }
+   
+   
+   );
+ });
+ 
+
+for (var i = 0; i < conformes.length; i++) {
+    var option = document.createElement("option");
+    option.value = conformes[i];
+    option.text = conformes[i];
+    selectList2.appendChild(option);
+}
+for (var i = 0; i < array.length; i++) {
+    var option = document.createElement("option");
+    option.value = array[i];
+    option.text = array[i];
+    selectList.appendChild(option);
+}
+</script>
+</body>
+</html>

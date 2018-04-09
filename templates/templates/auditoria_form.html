@@ -1,0 +1,399 @@
+{% load i18n %}
+{% load static %}
+
+<!DOCTYPE html>
+
+
+<head>
+<title>Adicionar auditoria</title>
+<!-- for-mobile-apps -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<!-- //for-mobile-apps -->
+<link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" media="all" />
+<link rel="stylesheet" href="{% static 'css/jquery-ui.css'  %}" />
+
+<style>
+
+.connected {
+    position: element(#Target);
+    transform: translateY(-100%);
+}
+
+
+</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+<!--<script type="text/javascript" src="{% static 'js/chainedfk.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bindfields.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/chainedm2m.js' %}"></script>
+-->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+<link href="//fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese" rel="stylesheet">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+</head>
+
+<html>
+
+
+<title>Auditorias P3</title>
+
+
+<body>
+
+<div class="w3-top">
+  <div class="w3-bar w3-white w3-wide w3-padding w3-card">
+    <a href="/" class="w3-bar-item w3-button" style="width: 120px !important;"><b>P3</b> Auditorias</a>
+    <div class="w3-right ">
+		{% if not user.is_authenticated %}
+      <a href="/login/" class="w3-bar-item w3-button">Login</a>
+      {% endif %}
+      <a href="/logout/" class="w3-bar-item w3-button">Logout</a>
+    </div>
+  </div>
+</div>
+
+
+<header class="w3-display-container w3-content w3-wide" style="max-width:1500px;" id="home">
+  <div class="w3-display-middle w3-margin-top w3-center">
+    <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>P3</b></span> <span class="w3-hide-small w3-text-light-grey">Auditorias</span></h1>
+  </div>
+</header>
+<div class="w3-content w3-padding" style="max-width:1564px">
+<br>
+<div class="w3-container w3-padding-32" id="projects">
+    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Criar nova auditoria</h3>
+  </div>
+
+
+
+<div class="main">
+		<div class="w3_agile_main_grids">
+			<div class="agileits_w3layouts_main_grid">
+				<form id="forma1" action="." method="post" enctype="multipart/form-data">
+					{% csrf_token %}
+					
+					{% for a in obras %}
+	<input type="hidden"name='empresa' value={{a.empresa}}>
+{% endfor %}
+
+
+                        <div class="agile_main_grid_left">
+						<div class="w3_agileits_main_grid_left_grid">
+							<h3></h3>
+							
+							<div style="display:block;outline-width: 3px;order-top: 3px dotted #e5e5e5;
+	border: 3px dotted #e5e5e5;
+	box-shadow: inset 0 -1px 0 0 #e5e5e5, inset 0 1px 0 0 #e5e5e5, 0 1px 0 0 #e5e5e5, 0 -1px 0 0 #e5e5e5;
+	margin-bottom: 1px;"id="div_geral" > <p>Geral </p>
+							{{ form.tecnico.label_tag }}{{ form.tecnico }}
+							{{ form.auditor.label_tag }}{{ form.auditor }}
+							{{ form.data.label_tag }}{{ form.data }}
+							{{ form.obra.label_tag }}{{ form.obra }}
+							{{ form.solicitado_cumprido.label_tag }}{{ form.solicitado_cumprido }}
+							{{ form.solicitado_nao_cumprido.label_tag }}{{ form.solicitado_nao_cumprido }}
+							{{ form.num_trabalhadores.label_tag }}{{ form.num_trabalhadores }}
+							{{ form.num_acidentes.label_tag }}{{ form.num_acidentes }}
+							</div><button type=button onclick="toggle_visibility('div_geral');">Ver/esconder (geral)</button>
+							<div style="display:block;outline-width: 3px;order-top: 3px dotted #e5e5e5;
+							border: 3px dotted #e5e5e5;
+							box-shadow: inset 0 -1px 0 0 #e5e5e5, inset 0 1px 0 0 #e5e5e5, 0 1px 0 0 #e5e5e5, 0 -1px 0 0 #e5e5e5;
+							margin-bottom: 1px;" id="fotos"><p>Fotos</p>
+				<label id ="cenas"> 
+							{% for form in inlines %}
+								</label>
+								
+								{{form.as_p}}
+								
+							{% endfor %}
+						
+				<label id = "adicionar_mais" for="field6"><span><button  type=button><img src="/media/mais.ico" height="42" width="42"></button>
+				</label>
+				<label id = "remover_foto" for="field6"><span><button type=button><img src="/media/menos.ico" height="42" width="42"></button>
+				</label>
+		</div><button type=button onclick="toggle_visibility('fotos');">Ver/esconder (fotos)</button>
+
+				<div id="outros" style="display:block;outline-width: 3px;border-top: 3px dotted #e5e5e5;
+					border: 3px dotted #e5e5e5;
+					box-shadow: inset 0 -1px 0 0 #e5e5e5, inset 0 1px 0 0 #e5e5e5, 0 1px 0 0 #e5e5e5, 0 -1px 0 0 #e5e5e5;
+					margin-bottom: 1px;" ><p>outros</p>
+				{{ form.recomendacoes.label_tag }}{{ form.recomendacoes }}
+				{{ form.trabalhos.label_tag }}{{ form.trabalhos }}
+</div><button type=button onclick="toggle_visibility('outros');">Ver/esconder (outros)</button>
+						</div>
+						
+					</div>
+					
+					<div class="clear"> </div>
+					<label><span></span><input class="w3-black" type="submit" value="Guardar" /></label>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div 	class="w3-grayscale" style="width:100%;height:450px;"></div>
+
+<footer class="w3-center w3-black w3-padding-16">
+  <p>Powered by <a href="/"  target="_blank" class="w3-hover-text-green">Patrick</a></p>
+</footer>
+
+
+
+</body>
+</html>
+   
+<html>
+
+<body>
+	
+	
+		
+<script type="text/javascript" src="{% static 'jquery.cookie.js' %}"></script> 
+
+<script>
+var csrftoken = $.cookie('csrftoken');
+function csrfSafeMethod(method) {
+	return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+	beforeSend: function(xhr, settings) {
+		if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+			xhr.setRequestHeader("X-CSRFToken", csrftoken);
+		}
+	}
+});
+
+var myDiv = document.getElementById("cenas");
+var selectList = document.createElement("select");
+var selectList2 = document.createElement("select");
+
+
+
+
+//////////////////////////////////////////////// append dinamico adicionar la em baixo
+
+
+///////////////////////////////////////////////
+
+
+var conformes = ["Conforme","Não conforme"," "];
+var form_num = 0;
+var output = document.createElement("label");
+output.id = "list" +0;
+//var br = document.createElement("br");
+//myDiv.appendChild(br);
+myDiv.appendChild(output);
+margem = 438;
+   
+$(document).ready(function() {
+	document.getElementById('id_fotos_set-' + form_num + '-imagem').addEventListener('change', handleFileSelect, false);
+	
+$("#adicionar_mais").click(function() {
+form_num ++;
+$("input[name='fotos_set-TOTAL_FORMS']").attr('value', form_num + 1);
+	$("#fotos").append("<div id='teste" + form_num + "'><br/><label id='list" + form_num + "'></label><label for='id_form-" + form_num + "-key'></label> <label for='id_form-" + form_num + "-key'>Imagem:</label> <br><input id='id_fotos_set-" + form_num +
+	"-imagem'  type='file' ' name='fotos_set-" + form_num + "-imagem'/><br><label for='id_form-" + form_num + "-value'>conformidade:</label> <select  id='id_fotos_set-" + form_num + "-conformidade' class = 'w3layouts_select' name='fotos_set-" + form_num +
+	"-conformidade'<option value=''>---------</option><option value='certo.jpg'>Conforme</option><option value='errado.jpg'>Não conforme</option></select><label>Conformidade_texto</label><select id='select1'  name='fotos_set-" + form_num +"-conformidade_texto' class=w3layouts_select></select><label for='id_form-" + form_num + "-value'>Descricao:</label> <select  id='id_fotos_set-" + form_num + "-descricao' type='text'  name='fotos_set-" + form_num +
+	"-descricao' class = 'w3layouts_select'/><label for='id_form-" + form_num + "-conformidade_texto2'>conformidade_texto2:</label> <input  id='id_fotos_set-" + form_num + "-conformidade_texto2' type='text'  name='fotos_set-" + form_num +
+	"-conformidade_texto2' class = 'w3layouts_select'/>	 <input id='id_fotos_set-" + form_num + "-auditoria' type='hidden' ' name='fotos_set-" + form_num + "-auditoria'/>   <br/><label for='id_form-" + form_num + "-key'></label> <input id='id_fotos_set-" + form_num + "-id' type='hidden' ' name='fotos_set-" + form_num + "-id'/> <br><br><br></div> ");
+	
+	
+    var select = document.getElementById('select1');
+
+    select.setAttribute("class", "w3layouts_select search_select");
+    
+
+    var conformes = ["","cenas","cenas2"];
+    var arrayLength = conformes.length;
+
+	for (var i = 1; i<arrayLength; i++){
+		var opt = document.createElement('option');
+		opt.value = [i];
+		opt.innerHTML = conformes[i];
+		select.appendChild(opt);
+	}
+	document.getElementById('id_fotos_set-' + form_num + '-imagem').addEventListener('change', handleFileSelect, false);
+	document.getElementById("select1").onchange = function() {fillFab()};
+
+$('html,body').animate({
+	scrollTop: $("#teste"+form_num).offset().top},'slow');
+
+		$("#adicionar_mais").css({"position":"absolute","margin-top": margem+"px"});
+		$("#remover_foto").css({"position":"absolute","margin-left":"70px","margin-top": margem+"px"});
+
+		var num_clicks = [50];
+		for (x=0; x<=num_clicks.length;x++){
+			margem += 481;
+			}
+		margem = margem-476;
+	});
+
+$("#remover_foto").click(function() {
+	 document.getElementById("teste"+form_num).remove();
+	 $('#remover_foto').after($("teste"+form_num).html());
+
+	 form_num--;
+//margem -= 485*2;
+
+	 /*var num_clicks = [];
+		for (x=0; x<=num_clicks.length;x++){
+			
+				if (margem < 0){
+				margem = 0
+				}
+
+			}*/
+	 //$("#adicionar_mais").css({"position":"absolute","margin-top": margem+"px"});
+	//$("#remover_foto").css({"position":"absolute","margin-left":"70px","margin-top": margem+"px"});
+			// ver isto
+			//alert(margem);
+			//margem = margem+490;
+	
+	});
+});
+
+
+for (var i = 0; i < conformes.length; i++) {
+    var option = document.createElement("option");
+    option.value = conformes[i];
+    option.text = conformes[i];
+    selectList2.appendChild(option);
+}
+
+
+$(document).ready(function() {
+    $('.search_select').select2();
+});
+
+
+
+function toggle_visibility(id) {
+   var e = document.getElementById(id);
+   if(e.style.display == 'block')
+	  e.style.display = 'none';
+   else
+	  e.style.display = 'block';
+}
+
+$('#id_tecnico').on('change', function() {
+  tecnico = $(this).find("option:selected").val();
+  window.sessionStorage.setItem("tecnico", tecnico);
+
+})
+
+
+$('#id_auditor').on('change', function() {
+  auditor = $(this).find("option:selected").val();
+  window.sessionStorage.setItem("auditor", auditor);
+
+})
+
+
+$('input[type="date"]').change(function(){
+	var data = this.value;
+	window.sessionStorage.setItem("data", data);
+})
+
+$('#id_obra').on('change', function() {
+  obra = $(this).find("option:selected").val();
+  window.sessionStorage.setItem("obra", obra);
+
+})
+
+$('#id_num_trabalhadores').on('input',function(e){
+  num_trabalhadores = $(this).val();
+  window.sessionStorage.setItem("num_trabalhadores", num_trabalhadores);
+});
+
+
+///////////////////// tb tem de ser dinamico
+$('#id_fotos_set-'+form_num + '-conformidade').on('input',function(e){
+  conformidade = $(this).val();
+  window.sessionStorage.setItem("conformidade", conformidade);
+});
+
+
+$('#id_fotos_set-'+form_num+'-conformidade_texto2').on('input',function(e){
+	
+  conformidade_texto2 = $(this).val();
+  window.sessionStorage.setItem('conformidade_texto2' + form_num , conformidade_texto2);
+});
+
+///////////////////////////////////// id_recomendacoes
+$('#id_recomendacoes').on('input',function(e){
+  recomendacoes = $(this).val();
+  window.sessionStorage.setItem("recomendacoes", recomendacoes);
+});
+
+$('#id_trabalhos').on('input',function(e){
+  trabalhos = $(this).val();
+  window.sessionStorage.setItem("trabalhos", trabalhos);
+});
+
+
+$("#id_tecnico").val(window.sessionStorage.getItem("tecnico"));
+$("#id_auditor").val(window.sessionStorage.getItem("auditor"));
+$("#id_data").val(window.sessionStorage.getItem("data"));
+$("#id_obra").val(window.sessionStorage.getItem("obra"));
+$("#id_num_trabalhadores").val(window.sessionStorage.getItem("num_trabalhadores"));
+$("#id_fotos_set-0-conformidade").val(window.sessionStorage.getItem("conformidade"));
+$("#id_fotos_set-"+form_num+"-conformidade_texto2").val(window.sessionStorage.getItem('conformidade_texto2'+form_num));
+$("#id_recomendacoes").val(window.sessionStorage.getItem("recomendacoes"));
+$("#id_trabalhos").val(window.sessionStorage.getItem("trabalhos"));
+
+
+function handleFileSelect(evt) {
+	var files = evt.target.files;
+	var f = files[0];
+	var reader = new FileReader();
+	reader.onload = (function(theFile) {
+		return function(e) {
+		  document.getElementById('list'+form_num).innerHTML = ['<img src="', e.target.result,'" title="', theFile.name, '" width="450" />'].join('');
+		};
+	})(f);
+
+	reader.readAsDataURL(f);
+}
+
+
+
+function fillFab() {
+var desc = document.getElementById("select1");
+var desc_conf = desc.options[desc.selectedIndex].text;
+$.ajax({
+	type: 'POST',
+	url: '/teste2/',
+	dataType: 'JSON',
+	contentType: 'application/json; charset=utf-8',
+	data: JSON.stringify(desc_conf),
+	success: function(data) {
+		$('#id_fotos_set-' + form_num + '-descricao').empty();
+				var desc_conformidade = data.desc_conformidade[i];
+				$('#id_fotos_set-' + form_num + '-descricao').append(
+						$('<option>', {class:'select2-selection__rendered',value:data.id_desc_conformidade,text:data.desc_conformidade})
+					);
+	},
+	error: function(rs, e) {
+		 alert("Error: "+ e + "\nResponse:" + rs.responseText);
+	}
+});
+}
+
+
+</script>
+
+<script src="{% static 'js/jquery.mask.js' %}"></script>
+<script>
+$(document).ready(function(){
+  $('#id_num_trabalhadores').mask('9999');
+  })
+</script>
+</body>
+</html>
