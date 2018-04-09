@@ -1,0 +1,6 @@
+[Desktop Entry]
+Comment=
+Terminal=false
+Name=PyCharm
+Exec=/home/patrick/Documentos/pycharm-community-2017.3/bin/pycharm.sh
+Type=Application

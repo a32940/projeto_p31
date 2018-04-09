@@ -1,0 +1,16 @@
+pip install pdfkit 
+pip install reportlab
+
+pip install django-extra-views 
+
+pip install setuptools
+pip install django-datatable 
+
+pip install django-smart_selects
+
+pip install django-addanother
+
+pip install django-braces
+
+pip install sorl-thumbnail
+pip install django-import-export
